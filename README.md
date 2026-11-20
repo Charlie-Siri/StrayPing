@@ -1,6 +1,6 @@
 # Stray Ping
 
-When your group is in combat but nobody has dealt or taken damage for 5 seconds, a mob is usually stuck somewhere: a caster out of line of sight, a runner, something that aggroed from far away. Stray Ping finds it, tells you and the party, tries one automatic ping, and lights up a button that pings it for the group.
+When you are in combat but nobody in your group has dealt or taken damage for 5 seconds, a mob is usually stuck somewhere: a caster out of line of sight, a runner, something that aggroed from far away. Stray Ping finds it, tells you and the party, tries one automatic ping, and lights up a button that pings it for the group.
 
 ## Use
 
@@ -10,7 +10,7 @@ When your group is in combat but nobody has dealt or taken damage for 5 seconds,
 
 | Command | What it does |
 | --- | --- |
-| `/stray` | Status: settings, and whether the group is in combat right now |
+| `/stray` | Status: settings, and whether you are in combat right now |
 | `/stray idle <2-60>` | Seconds of combat with no damage before the alert (default 5) |
 | `/stray party on\|off` | Party/raid chat message (default on, at most one every 20 s) |
 | `/stray autoping on\|off\|retry` | Try one automatic ping per alert (see below) |

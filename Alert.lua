@@ -138,7 +138,7 @@ local function CreateButton()
         if A.suspect then
             GameTooltip:AddLine(("Click: ping %s for the group"):format(A.suspect.name or "the stray mob"), 1, 1, 1)
         else
-            GameTooltip:AddLine("Click: ping your target. When the group is stuck in combat, it pings the stray mob.", 1, 1, 1, true)
+            GameTooltip:AddLine("Click: ping your target. When you are stuck in combat, it pings the stray mob.", 1, 1, 1, true)
         end
         GameTooltip:AddLine("Shift+drag to move. Bind a key in Key Bindings > AddOns.", 0.6, 0.6, 0.6, true)
         GameTooltip:Show()
@@ -296,7 +296,7 @@ end)
 
 ns.Listen("STATUS", function()
     local W, s = ns.Watch, ns.db.settings
-    ns.Print("alert after %d s of group combat with no damage; party chat %s; automatic ping %s (%s); skull %s.",
+    ns.Print("alert after %d s of your combat with no group damage; party chat %s; automatic ping %s (%s); skull %s.",
         s.idle, s.party and "on" or "off", s.autoPing and "on" or "off", tostring(ns.db.autoPingResult or "not tried yet"),
         s.mark and "on" or "off")
     ns.Print("Group: %d in group, %s. /stray help for commands.", #ns.Members(),

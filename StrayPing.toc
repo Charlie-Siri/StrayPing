@@ -1,6 +1,6 @@
 ## Interface: 16001
 ## Title: Stray Ping
-## Notes: When your group is in combat but nobody has dealt or taken damage for 5 seconds, finds the stray mob, tells you and the party, and pings it. /stray
+## Notes: When you are in combat but nobody in your group has dealt or taken damage for 5 seconds, finds the stray mob, tells you and the party, and pings it. /stray
 ## Version: 0.1.0
 ## IconTexture: 132212
 ## SavedVariables: StrayPingDB, StrayPingLog

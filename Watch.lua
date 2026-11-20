@@ -1,4 +1,4 @@
--- Watch: is the group in combat, and when did anyone in it last deal or take damage?
+-- Watch: are you in combat, and when did anyone in your group last deal or take damage?
 -- Damage is seen through whatever this client allows addons: the combat log, group members' health, enemy
 -- nameplate health and UNIT_COMBAT. Each signal is counted, so /stray probe shows which ones work here.
 local addonName, ns = ...
@@ -119,13 +119,6 @@ end
 ---------------------------------------------------------------------------
 -- The stall check (4 times a second)
 ---------------------------------------------------------------------------
-local function GroupInCombat()
-    for _, u in ipairs(ns.Members()) do
-        if ns.Yes(UnitAffectingCombat, u) then return true, u end
-    end
-    return false
-end
-
 local function SnapshotHealth()
     wipe(W.health)
     for _, u in ipairs(ns.Members()) do W.health[u] = ns.Num(ns.Read(UnitHealth, u)) end
@@ -133,10 +126,10 @@ end
 
 local function Tick()
     local now = GetTime()
-    local inCombat, who = GroupInCombat()
-    if not inCombat then
+    -- Only your own combat counts: a party member fighting elsewhere isn't your stray mob.
+    if not ns.Yes(UnitAffectingCombat, "player") then
         if W.combatSince then
-            log.info("Group out of combat after %.1f s (%d alert%s)", now - W.combatSince, W.alerts, W.alerts == 1 and "" or "s")
+            log.info("Out of combat after %.1f s (%d alert%s)", now - W.combatSince, W.alerts, W.alerts == 1 and "" or "s")
             W.combatSince, W.alerted = nil, false
             wipe(W.lastHit)
             ns.Fire("COMBAT_END")
@@ -148,15 +141,15 @@ local function Tick()
         W.lastActivity = math.max(W.lastActivity, now)   -- entering combat counts as activity
         W.alerts = 0
         SnapshotHealth()
-        log.info("Group in combat (%s first)", tostring(who))
-        ns.Fire("COMBAT_START", who)
+        log.info("In combat")
+        ns.Fire("COMBAT_START", "player")
     end
     local idle = now - W.lastActivity
     if not W.alerted and idle >= ns.db.settings.idle then
         W.alerted = true
         W.alertAt = now
         W.alerts = W.alerts + 1
-        log.info("Stall: %.1f s of group combat without damage (last activity: %s, in combat %.1f s)", idle,
+        log.info("Stall: %.1f s in combat without group damage (last activity: %s, in combat %.1f s)", idle,
             tostring(W.lastKind), now - W.combatSince)
         ns.Fire("STALL", idle)
     end
