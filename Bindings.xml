@@ -1,0 +1,4 @@
+<Bindings>
+    <Binding name="CLICK StrayPingButton:LeftButton" header="STRAYPING" category="ADDONS">
+    </Binding>
+</Bindings>
